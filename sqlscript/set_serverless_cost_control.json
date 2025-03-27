@@ -1,0 +1,20 @@
+{
+	"name": "set_serverless_cost_control",
+	"properties": {
+		"folder": {
+			"name": "utils"
+		},
+		"content": {
+			"query": "-- View external data usage  \nSELECT * FROM sys.dm_external_data_processed;  \n\n-- Check processing limits \nSELECT * FROM sys.configurations WHERE name LIKE 'Data Processed %';   \n\n-- Set monthly data limit (useful for controlling costs in Azure Synapse)  \nEXEC sp_set_data_processed_limit @type = N'monthly', @limit_tb = 2;  \n\n-- Set weekly data limit (useful for controlling costs in Azure Synapse)  \nEXEC sp_set_data_processed_limit @type = N'weekly', @limit_tb = 1;\n\n-- Set daily data limit (useful for controlling costs in Azure Synapse)  \nEXEC sp_set_data_processed_limit @type = N'daily', @limit_tb = 1;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
